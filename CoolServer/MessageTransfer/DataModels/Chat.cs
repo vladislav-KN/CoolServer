@@ -16,11 +16,10 @@ namespace CoolServer.MessageTransfer.DataModels
         {
             buffer = new byte[buffSize];
         }
-        GetChatModel getChat { get; set; }
-        GetChatsModel getChats { get; set; }
-        PostChatModel postChat { get; set; }
-        ShortGetChatModel shortModel { get; set; }
-
+        ChatDetails ChatDet { get; set; }
+ 
+        ChatShortDetails ChatShort { get; set; }
+        ChatsPortionDetails ChatPortionc { get; set; }
         public void ToByte(object data)
         {
             throw new NotImplementedException();
