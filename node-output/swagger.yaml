@@ -23,42 +23,23 @@
             "format" : "uuid"
           }
         } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/NewUserDetails"
-              }
-            },
-            "text/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/NewUserDetails"
-              }
-            },
-            "application/*+json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/NewUserDetails"
-              }
-            }
-          }
-        },
         "responses" : {
           "200" : {
             "description" : "Chat получен",
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatShortDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatShortDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatShortDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               }
             }
@@ -116,17 +97,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             }
           }
@@ -137,17 +118,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatShortDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatShortDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatShortDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               }
             }
@@ -195,17 +176,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             }
           }
@@ -295,17 +276,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/NewUserDetails"
+                "$ref" : "#/components/schemas/User"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/NewUserDetails"
+                "$ref" : "#/components/schemas/User"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/NewUserDetails"
+                "$ref" : "#/components/schemas/User"
               }
             }
           }
@@ -316,17 +297,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatsPortionDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatsPortionDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/ChatsPortionDetails"
+                  "$ref" : "#/components/schemas/Chat"
                 }
               }
             }
@@ -396,17 +377,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             }
           }
@@ -417,17 +398,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "$ref" : "#/components/schemas/Message"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "$ref" : "#/components/schemas/Message"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "$ref" : "#/components/schemas/Message"
                 }
               }
             }
@@ -496,17 +477,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             }
           }
@@ -517,17 +498,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "$ref" : "#/components/schemas/Message"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "$ref" : "#/components/schemas/Message"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "$ref" : "#/components/schemas/Message"
                 }
               }
             }
@@ -586,17 +567,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/ChatDetails"
+                "$ref" : "#/components/schemas/Chat"
               }
             }
           }
@@ -607,17 +588,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "type" : "boolean"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "type" : "boolean"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                  "type" : "boolean"
                 }
               }
             }
@@ -698,17 +679,26 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
                 }
               }
             }
@@ -718,17 +708,26 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/User"
+                  }
                 }
               }
             }
@@ -797,17 +796,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NewUserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NewUserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NewUserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               }
             }
@@ -874,17 +873,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NewUserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NewUserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NewUserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               }
             }
@@ -942,17 +941,17 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/UserNewDetails"
+                "$ref" : "#/components/schemas/User"
               }
             },
             "text/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/UserNewDetails"
+                "$ref" : "#/components/schemas/User"
               }
             },
             "application/*+json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/UserNewDetails"
+                "$ref" : "#/components/schemas/User"
               }
             }
           }
@@ -963,17 +962,17 @@
             "content" : {
               "text/plain" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               },
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               },
               "text/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/UserDetails"
+                  "$ref" : "#/components/schemas/User"
                 }
               }
             }
@@ -1016,197 +1015,92 @@
   },
   "components" : {
     "schemas" : {
-      "ChatDetails" : {
+      "Chat" : {
         "type" : "object",
         "properties" : {
           "id" : {
             "type" : "string",
+            "description" : "ID чата",
             "format" : "uuid"
           },
           "creationTimeLocal" : {
             "type" : "string",
+            "description" : "Время создания",
             "format" : "date-time"
           },
           "chatMembers" : {
             "type" : "array",
+            "description" : "Участники чата",
             "nullable" : true,
             "items" : {
-              "$ref" : "#/components/schemas/UserDetails"
+              "$ref" : "#/components/schemas/User"
             }
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "Чат пользователя"
       },
-      "ChatShortDetails" : {
+      "Message" : {
         "type" : "object",
         "properties" : {
           "id" : {
             "type" : "string",
-            "format" : "uuid"
-          },
-          "creationTimeLocal" : {
-            "type" : "string",
-            "format" : "date-time"
-          }
-        },
-        "additionalProperties" : false
-      },
-      "ChatsPortionDetails" : {
-        "type" : "object",
-        "properties" : {
-          "offset" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "portion" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "totalCount" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "content" : {
-            "type" : "array",
-            "nullable" : true,
-            "items" : {
-              "$ref" : "#/components/schemas/ChatShortDetails"
-            }
-          }
-        },
-        "additionalProperties" : false
-      },
-      "MessageShortDetails" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "string",
+            "description" : "ID сообщения",
             "format" : "uuid"
           },
           "senderId" : {
             "type" : "string",
+            "description" : "ID отправителя",
             "format" : "uuid"
           },
-          "sendingTimeLocal" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
           "isViewed" : {
-            "type" : "boolean"
+            "type" : "boolean",
+            "description" : "Просмотрено",
+            "nullable" : true
           },
           "text" : {
             "type" : "string",
+            "description" : "Текст сообщения",
             "nullable" : true
           },
           "attachmentsCount" : {
             "type" : "integer",
-            "format" : "int32"
-          }
-        },
-        "additionalProperties" : false
-      },
-      "MessagesPortionDetails" : {
-        "type" : "object",
-        "properties" : {
-          "offset" : {
-            "type" : "integer",
+            "description" : "Количество прикреплённых файлов",
             "format" : "int32"
           },
-          "portion" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "totalCount" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "content" : {
+          "attachments" : {
             "type" : "array",
+            "description" : "Прикреплённые файлы",
             "nullable" : true,
             "items" : {
-              "$ref" : "#/components/schemas/MessageShortDetails"
+              "type" : "string"
             }
           }
         },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "Сообщение пользователя"
       },
-      "NewUserDetails" : {
-        "required" : [ "login", "password" ],
-        "type" : "object",
-        "properties" : {
-          "login" : {
-            "maxLength" : 16,
-            "minLength" : 6,
-            "type" : "string"
-          },
-          "password" : {
-            "maxLength" : 32,
-            "minLength" : 8,
-            "type" : "string"
-          }
-        },
-        "additionalProperties" : false
-      },
-      "UserDetails" : {
+      "User" : {
         "type" : "object",
         "properties" : {
           "id" : {
             "type" : "string",
+            "description" : "ID пользователя",
             "format" : "uuid"
           },
           "login" : {
             "type" : "string",
+            "description" : "Логин пользователя",
             "nullable" : true
-          }
-        },
-        "additionalProperties" : false
-      },
-      "UserNewDetails" : {
-        "required" : [ "oldPassword" ],
-        "type" : "object",
-        "properties" : {
-          "newLogin" : {
-            "maxLength" : 16,
-            "minLength" : 6,
+          },
+          "password" : {
             "type" : "string",
+            "description" : "Пароль пользователя",
             "nullable" : true
-          },
-          "newPassword" : {
-            "maxLength" : 32,
-            "minLength" : 8,
-            "type" : "string",
-            "nullable" : true
-          },
-          "oldPassword" : {
-            "type" : "string"
           }
         },
-        "additionalProperties" : false
-      },
-      "UsersPortionDetails" : {
-        "type" : "object",
-        "properties" : {
-          "offset" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "portion" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "totalCount" : {
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "content" : {
-            "type" : "array",
-            "nullable" : true,
-            "items" : {
-              "$ref" : "#/components/schemas/UserDetails"
-            }
-          }
-        },
-        "additionalProperties" : false
+        "additionalProperties" : false,
+        "description" : "Пользователь"
       }
     }
   }
