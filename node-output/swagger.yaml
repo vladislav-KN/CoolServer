@@ -1,0 +1,1213 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "CoolServer",
+    "version" : "v1"
+  },
+  "servers" : [ {
+    "url" : "/"
+  } ],
+  "paths" : {
+    "/api/Chat/{id}" : {
+      "get" : {
+        "tags" : [ "Chat" ],
+        "summary" : "Передаёт чат пользователя по id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Chat получен",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatShortDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatShortDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatShortDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке получить чата",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/Chat/{user}" : {
+      "post" : {
+        "tags" : [ "Chat" ],
+        "summary" : "Создаёт чат пользователя",
+        "parameters" : [ {
+          "name" : "user",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Chat создан",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatShortDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatShortDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatShortDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке создать чата",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/Chat" : {
+      "delete" : {
+        "tags" : [ "Chat" ],
+        "summary" : "Удалить",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Chat создан",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "boolean"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "boolean"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "boolean"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке создать чата",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/Chat/{number}/{offset}" : {
+      "get" : {
+        "tags" : [ "Chat" ],
+        "summary" : "Получает список чатов заданного количества",
+        "parameters" : [ {
+          "name" : "number",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NewUserDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Chat получен",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatsPortionDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatsPortionDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ChatsPortionDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке получить чата",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/Message/{number}/{offset}" : {
+      "get" : {
+        "tags" : [ "Message" ],
+        "summary" : "Получает заданное количество сообщений в чате",
+        "description" : "Awesomeness!",
+        "parameters" : [ {
+          "name" : "number",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Сообщения получены",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке получить сообщения",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/Message/{text}/{id}" : {
+      "post" : {
+        "tags" : [ "Message" ],
+        "summary" : "Изменить сообщение",
+        "description" : "Awesomeness!",
+        "parameters" : [ {
+          "name" : "text",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Сообщения изменены",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке изменении сообщения",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/Message/{id}" : {
+      "delete" : {
+        "tags" : [ "Message" ],
+        "summary" : "Удалить сообщение",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ChatDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Сообщения удалено",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/MessagesPortionDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке удалить сообщение",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/User/{portion}/{offset}" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Поиск пользователей по логину",
+        "description" : "Логин может быть не полным",
+        "parameters" : [ {
+          "name" : "login",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "portion",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "offset",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Пользователь найден",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                }
+              }
+            }
+          },
+          "204" : {
+            "description" : "Пользователь не найден",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UsersPortionDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке найти пользователей",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/User/{login}/{password}" : {
+      "get" : {
+        "tags" : [ "User" ],
+        "summary" : "Вход пользователя",
+        "parameters" : [ {
+          "name" : "login",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Доступ предоставлен",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewUserDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewUserDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewUserDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке войти",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "User" ],
+        "summary" : "Регистрация",
+        "parameters" : [ {
+          "name" : "login",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "password",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Пользователь зарегистрирован",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewUserDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewUserDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NewUserDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке зарегистрироваться",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    },
+    "/api/User/{password}" : {
+      "post" : {
+        "tags" : [ "User" ],
+        "summary" : "Новый пароль",
+        "parameters" : [ {
+          "name" : "password",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserNewDetails"
+              }
+            },
+            "text/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserNewDetails"
+              }
+            },
+            "application/*+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserNewDetails"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Пользователь обновил пароль",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserDetails"
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserDetails"
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserDetails"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Ошибки возникшие при попытке сменить пароль",
+            "content" : {
+              "text/plain" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              },
+              "text/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "Сервер не отвечает"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ChatDetails" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "creationTimeLocal" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "chatMembers" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/UserDetails"
+            }
+          }
+        },
+        "additionalProperties" : false
+      },
+      "ChatShortDetails" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "creationTimeLocal" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        },
+        "additionalProperties" : false
+      },
+      "ChatsPortionDetails" : {
+        "type" : "object",
+        "properties" : {
+          "offset" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "portion" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "totalCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "content" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/ChatShortDetails"
+            }
+          }
+        },
+        "additionalProperties" : false
+      },
+      "MessageShortDetails" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "senderId" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "sendingTimeLocal" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "isViewed" : {
+            "type" : "boolean"
+          },
+          "text" : {
+            "type" : "string",
+            "nullable" : true
+          },
+          "attachmentsCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "additionalProperties" : false
+      },
+      "MessagesPortionDetails" : {
+        "type" : "object",
+        "properties" : {
+          "offset" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "portion" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "totalCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "content" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/MessageShortDetails"
+            }
+          }
+        },
+        "additionalProperties" : false
+      },
+      "NewUserDetails" : {
+        "required" : [ "login", "password" ],
+        "type" : "object",
+        "properties" : {
+          "login" : {
+            "maxLength" : 16,
+            "minLength" : 6,
+            "type" : "string"
+          },
+          "password" : {
+            "maxLength" : 32,
+            "minLength" : 8,
+            "type" : "string"
+          }
+        },
+        "additionalProperties" : false
+      },
+      "UserDetails" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "login" : {
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "additionalProperties" : false
+      },
+      "UserNewDetails" : {
+        "required" : [ "oldPassword" ],
+        "type" : "object",
+        "properties" : {
+          "newLogin" : {
+            "maxLength" : 16,
+            "minLength" : 6,
+            "type" : "string",
+            "nullable" : true
+          },
+          "newPassword" : {
+            "maxLength" : 32,
+            "minLength" : 8,
+            "type" : "string",
+            "nullable" : true
+          },
+          "oldPassword" : {
+            "type" : "string"
+          }
+        },
+        "additionalProperties" : false
+      },
+      "UsersPortionDetails" : {
+        "type" : "object",
+        "properties" : {
+          "offset" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "portion" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "totalCount" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "content" : {
+            "type" : "array",
+            "nullable" : true,
+            "items" : {
+              "$ref" : "#/components/schemas/UserDetails"
+            }
+          }
+        },
+        "additionalProperties" : false
+      }
+    }
+  }
+}
