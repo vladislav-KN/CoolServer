@@ -1,5 +1,4 @@
 ﻿using CoolApiModels.Chats;
-using CoolServer.MessageTransfer.DataModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,30 +11,68 @@ using CoolServer.Controllers.CModels;
 
 namespace CoolServer.Controllers
 {
-
+    /// <summary>
+    /// Контроллер для управления чатами
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ChatController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<ChatDetails> Get(NewUserDetails user)
-        {
-            return new ChatDetails();
-        }
+        /// <summary>
+        /// Передаёт чат пользователя по id
+        /// </summary>
+        /// <response code="200">Chat получен</response>
+        /// <response code="400">Ошибки возникшие при попытке получить чата</response>
+        /// <response code="500">Сервер не отвечает</response>
         [HttpGet("{id}")]
-        public ActionResult<ChatShortDetails> GetByGuid(NewUserDetails user, Guid id)
+        [ProducesResponseType(typeof(Chat), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
+        public ActionResult<Chat> GetByGuid(Guid id)
         {
-            return new ChatShortDetails();
+            return new Chat();
         }
-        [HttpPost("{user}")]
-        public ActionResult<ChatShortDetails> Create(UserChat userChat)
+        /// <summary>
+        /// Создаёт чат пользователя
+        /// </summary>
+        /// <response code="200">Chat создан</response>
+        /// <response code="400">Ошибки возникшие при попытке создать чата</response>
+        /// <response code="500">Сервер не отвечает</response>
+        [HttpPut]
+        [ProducesResponseType(typeof(Chat), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
+        public ActionResult<Chat> Create(Chat Chat)
         {
-            return new ChatShortDetails();
+            return new Chat();
         }
+        /// <summary>
+        /// Удалить 
+        /// </summary>
+        /// <response code="200">Chat создан</response>
+        /// <response code="400">Ошибки возникшие при попытке создать чата</response>
+        /// <response code="500">Сервер не отвечает</response>
+        [HttpDelete]
+        [ProducesResponseType(typeof(bool), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
+        public ActionResult<bool> Delete(Chat Chat)
+        {
+            return true;
+        }
+        /// <summary>
+        /// Получает список чатов заданного количества
+        /// </summary>
+        /// <response code="200">Chat получен</response>
+        /// <response code="400">Ошибки возникшие при попытке получить чата</response>
+        /// <response code="500">Сервер не отвечает</response>
         [HttpGet("{number}/{offset}")]
-        public ActionResult<ChatsPortionDetails> GetPortion(NewUserDetails user, int number, int offset)
+        [ProducesResponseType(typeof(Chat), 200)]
+        [ProducesResponseType(typeof(IDictionary<string,string>), 400)]
+        [ProducesResponseType(500)]
+        public ActionResult<IEnumerable<Chat>> GetPortion(User user, int number, int offset)
         {
-            return new ChatsPortionDetails();
+            return new List<Chat>();
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,6 +32,19 @@ namespace CoolServer
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoolServer", Version = "v1" });
+            });
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1.0",
+                    new OpenApiInfo
+                    {
+                        Title = "CoolServer - V1",
+                        Version = "v1"
+                    }
+                 );
+
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "CoolServer.xml");
+                c.IncludeXmlComments(filePath);
             });
         }
 

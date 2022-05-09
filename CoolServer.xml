@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CoolServer</name>
+    </assembly>
+    <members>
+        <member name="T:CoolServer.Controllers.ChatController">
+            <summary>
+            Контроллер для управления чатами
+            </summary>
+        </member>
+        <member name="M:CoolServer.Controllers.ChatController.GetByGuid(System.Guid)">
+            <summary>
+            Передаёт чат пользователя по id
+            </summary>
+            <response code="200">Chat получен</response>
+            <response code="400">Ошибки возникшие при попытке получить чата</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.ChatController.Create(CoolServer.Controllers.CModels.Chat)">
+            <summary>
+            Создаёт чат пользователя
+            </summary>
+            <response code="200">Chat создан</response>
+            <response code="400">Ошибки возникшие при попытке создать чата</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.ChatController.Delete(CoolServer.Controllers.CModels.Chat)">
+            <summary>
+            Удалить 
+            </summary>
+            <response code="200">Chat создан</response>
+            <response code="400">Ошибки возникшие при попытке создать чата</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.ChatController.GetPortion(CoolServer.Controllers.CModels.User,System.Int32,System.Int32)">
+            <summary>
+            Получает список чатов заданного количества
+            </summary>
+            <response code="200">Chat получен</response>
+            <response code="400">Ошибки возникшие при попытке получить чата</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="T:CoolServer.Controllers.CModels.Chat">
+            <summary>
+            Чат пользователя
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Chat.Id">
+            <summary>
+            ID чата
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Chat.CreationTimeLocal">
+            <summary>
+            Время создания
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Chat.ChatMembers">
+            <summary>
+            Участники чата
+            </summary>
+        </member>
+        <member name="T:CoolServer.Controllers.CModels.Message">
+            <summary>
+            Сообщение пользователя
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Message.Id">
+            <summary>
+            ID сообщения
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Message.SenderId">
+            <summary>
+            ID отправителя
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Message.IsViewed">
+            <summary>
+            Просмотрено
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Message.Text">
+            <summary>
+            Текст сообщения
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Message.AttachmentsCount">
+            <summary>
+            Количество прикреплённых файлов
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Message.Attachments">
+            <summary>
+            Прикреплённые файлы
+            </summary>
+        </member>
+        <member name="T:CoolServer.Controllers.CModels.User">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.User.Id">
+            <summary>
+            ID пользователя
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.User.Login">
+            <summary>
+            Логин пользователя
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.User.Password">
+            <summary>
+            Пароль пользователя
+            </summary>
+        </member>
+        <member name="T:CoolServer.Controllers.MessageController">
+            <summary>
+            Контроллер для управления сообщения
+            </summary>
+        </member>
+        <member name="M:CoolServer.Controllers.MessageController.Get(CoolServer.Controllers.CModels.Chat,System.Int32,System.Int32)">
+            <summary>
+            Получает заданное количество сообщений в чате
+            </summary>
+            <remarks>Awesomeness!</remarks>
+            <response code="200">Сообщения получены</response>
+            <response code="400">Ошибки возникшие при попытке получить сообщения</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.MessageController.Edit(CoolServer.Controllers.CModels.Chat,System.String,System.Guid)">
+            <summary>
+            Изменить сообщение
+            </summary>
+            <remarks>Awesomeness!</remarks>
+            <response code="200">Сообщения изменены</response>
+            <response code="400">Ошибки возникшие при попытке изменении сообщения</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.MessageController.Edit(CoolServer.Controllers.CModels.Chat,System.Guid)">
+            <summary>
+            Удалить сообщение
+            </summary>
+            <response code="200">Сообщения удалено</response>
+            <response code="400">Ошибки возникшие при попытке удалить сообщение</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="T:CoolServer.Controllers.UserController">
+            <summary>
+            Контроллер для управления пользователь
+            </summary>
+        </member>
+        <member name="M:CoolServer.Controllers.UserController.Search(System.String,System.Int32,System.Int32)">
+            <summary>
+            Поиск пользователей по логину
+            </summary>
+            <remarks>Логин может быть не полным</remarks>
+            <response code="200">Пользователь найден</response>
+            <response code="204">Пользователь не найден</response>
+            <response code="400">Ошибки возникшие при попытке найти пользователей</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.UserController.Login(System.String,System.String)">
+            <summary>
+            Вход пользователя
+            </summary>
+            <response code="200">Доступ предоставлен</response>
+            <response code="400">Ошибки возникшие при попытке войти</response>
+            <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.UserController.Registration(System.String,System.String)">
+             <summary>
+            Регистрация
+             </summary>
+             <response code="200">Пользователь зарегистрирован</response>
+             <response code="400">Ошибки возникшие при попытке зарегистрироваться</response>
+             <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="M:CoolServer.Controllers.UserController.NewPassword(CoolServer.Controllers.CModels.User,System.String)">
+             <summary>
+            Новый пароль
+             </summary>
+             <response code="200">Пользователь обновил пароль</response>
+             <response code="400">Ошибки возникшие при попытке сменить пароль</response>
+             <response code="500">Сервер не отвечает</response>
+        </member>
+    </members>
+</doc>

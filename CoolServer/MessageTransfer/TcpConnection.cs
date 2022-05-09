@@ -1,4 +1,5 @@
-﻿using CoolServer.Interfaces;
+﻿using CoolServer.Controllers.CModels;
+using CoolServer.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace CoolServer.MessageTransfer
             throw new NotImplementedException();
         }
 
-        public bool SendData(IData data)
+        public bool PrepareData()
         {
             throw new NotImplementedException();
         }
