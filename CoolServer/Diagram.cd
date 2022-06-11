@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CoolServer.MessageTransfer.Connection">
+    <Position X="13.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAIAAEAAAAAAAAACAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>MessageTransfer\ConnectionHandler.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.186" />
+  </Class>
+  <Class Name="CoolServer.MessageTransfer.ConnectionHandler">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAIAAAAAAAAAACAAAAAAAAQAAAAEAAAAAA=</HashCode>
+      <FileName>MessageTransfer\ConnectionHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.MessageTransfer.Transfer">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQ=</HashCode>
+      <FileName>MessageTransfer\TransferMessages.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.MessageTransfer.TransferMessages">
+    <Position X="10" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>MessageTransfer\TransferMessages.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.MessageTransfer.MultiTask&lt;T&gt;">
+    <Position X="8.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAAgBAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>MessageTransfer\MultiTask.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CoolServer.MessageTransfer.RequestApi&lt;T&gt;">
+    <Position X="8.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAACAEAAAAAAAAABAAAAAg=</HashCode>
+      <FileName>RequestApi.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.Controllers.ChatController">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAACAAAAAFAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\ChatController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.Controllers.MessageController">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\MessageController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.Controllers.UserController">
+    <Position X="13.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAQAAAkAAA=</HashCode>
+      <FileName>Controllers\UserController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.Controllers.CModels.Chat">
+    <Position X="15.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\CModels\Chat.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.Controllers.CModels.Message">
+    <Position X="17" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAEAAAAIABAAAAABAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Controllers\CModels\Message.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolServer.Controllers.CModels.User">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAAAAAAA=</HashCode>
+      <FileName>Controllers\CModels\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Microsoft.AspNetCore.Mvc.ControllerBase" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Enum Name="CoolServer.MessageTransfer.ACTION">
+    <Position X="10" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAGAAQABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MessageTransfer\TransferMessages.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

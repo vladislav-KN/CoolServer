@@ -32,34 +32,5 @@ namespace CoolServer.Controllers
         {
             return new List<Message>();
         }
-        /// <summary>
-        /// Изменить сообщение
-        /// </summary>
-        /// <remarks>Awesomeness!</remarks>
-        /// <response code="200">Сообщения изменены</response>
-        /// <response code="400">Ошибки возникшие при попытке изменении сообщения</response>
-        /// <response code="500">Сервер не отвечает</response>
-        [HttpPost("{text}/{id}")]
-        [ProducesResponseType(typeof(Message), 200)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
-        [ProducesResponseType(500)]
-        public ActionResult<Message> Edit(Chat chat, string text, Guid id)
-        {
-            return new Message();
-        }
-        /// <summary>
-        /// Удалить сообщение
-        /// </summary>
-        /// <response code="200">Сообщения удалено</response>
-        /// <response code="400">Ошибки возникшие при попытке удалить сообщение</response>
-        /// <response code="500">Сервер не отвечает</response>
-        [HttpDelete("{id}")]
-        [ProducesResponseType(typeof(bool), 200)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
-        [ProducesResponseType(500)]
-        public ActionResult<bool> Edit(Chat chat, Guid id)
-        {
-            return true;
-        }
     }
 }

@@ -1,3 +1,4 @@
+using CoolServer.Properties;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,14 +13,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+ 
 
 namespace CoolServer
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -27,7 +33,7 @@ namespace CoolServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -46,6 +52,7 @@ namespace CoolServer
                 var filePath = Path.Combine(System.AppContext.BaseDirectory, "CoolServer.xml");
                 c.IncludeXmlComments(filePath);
             });
+            services.Configure<Setup>(Configuration.GetSection("Setup"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,11 +60,12 @@ namespace CoolServer
         {
             if (env.IsDevelopment())
             {
+                
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CoolServer v1"));
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
