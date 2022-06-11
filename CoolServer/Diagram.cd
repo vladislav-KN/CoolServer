@@ -25,7 +25,7 @@
   <Class Name="CoolServer.MessageTransfer.TransferMessages">
     <Position X="10" Y="5.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
       <FileName>MessageTransfer\TransferMessages.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -37,7 +37,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="CoolServer.MessageTransfer.RequestApi&lt;T&gt;">
+  <Class Name="CoolServer.MessageTransfer.RequestApi&lt;T, K&gt;">
     <Position X="8.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAABAAAAAAAAACAEAAAAAAAAABAAAAAg=</HashCode>
@@ -75,7 +75,7 @@
   <Class Name="CoolServer.Controllers.CModels.Message">
     <Position X="17" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAEAAAAIABAAAAABAAAAAAAACAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAEAAAAIABAAAAAAAAAAAAAACAAAAAQ=</HashCode>
       <FileName>Controllers\CModels\Message.cs</FileName>
     </TypeIdentifier>
   </Class>

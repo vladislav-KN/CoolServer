@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CoolServer.MessageTransfer
 {
-    public class RequestApi<T>
+    public class RequestApi<T,K>
     {
         static HttpClient client = new HttpClient();
         public static async Task<T> Get(string request, string token = "")
@@ -30,7 +30,7 @@ namespace CoolServer.MessageTransfer
             return result;
 
         }
-        public static async Task<T> Put(T data,string request, string token = "")
+        public static async Task<T> Put(K data,string request, string token = "")
         {
             T result;
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
@@ -56,7 +56,7 @@ namespace CoolServer.MessageTransfer
             client.DefaultRequestHeaders.Remove("Token");
             return response.StatusCode;
         }
-        public static async Task<Uri> Post(T data, string request, string token = "")
+        public static async Task<Uri> Post(K data, string request, string token = "")
         {
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
                 client.DefaultRequestHeaders.Add("Token", token);

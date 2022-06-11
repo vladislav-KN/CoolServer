@@ -15,9 +15,9 @@ namespace CoolServer.Controllers.CModels
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
-        /// ID отправителя
+        /// ID чата
         /// </summary>
-        public Guid SenderId { get; set; }
+        public Guid ChatId { get; set; }
         /// <summary>
         /// Просмотрено
         /// </summary>

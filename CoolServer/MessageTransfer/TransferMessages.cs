@@ -31,6 +31,8 @@ namespace CoolServer.MessageTransfer
     /// </summary>
     public class TransferMessages: Transfer
     {
+        internal ACTION action;
+
         /// <summary>
         /// передаваемое сообщение
         /// </summary>

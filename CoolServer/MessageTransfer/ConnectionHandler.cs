@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 
 namespace CoolServer.MessageTransfer
@@ -51,7 +52,34 @@ namespace CoolServer.MessageTransfer
 
         public async Task Handler(TcpClient client)
         {
-
+            var stream = client.GetStream();
+            var binf = new BinaryFormatter();
+            var message = binf.Deserialize(stream) as TransferMessages;
+            switch (message.action)
+            {
+                case ACTION.CHNG:
+                    //Заносим изменения в бд
+                    CoolApiModels.Messages.MessageNewDetails messageNew = new CoolApiModels.Messages.MessageNewDetails()
+                    {
+                        Text = message.Message.Text,
+                        Attachments = message.Message.Attachments,
+                        IsViewed = message.Message.IsViewed
+                    };
+                    _ = RequestApi<CoolApiModels.Messages.MessageDetails, CoolApiModels.Messages.MessageNewDetails>.Put(messageNew, $"/api/Messages/{message.Message.Id}", message.Token);
+                    break;
+                case ACTION.DEL:
+                    //Заносим изменения в бд
+                    _ = RequestApi<object,object>.Delete($"/api/Messages/{message.Message.Id}", message.Token);
+                    break;
+                case ACTION.SEND:
+                    CoolApiModels.Messages.NewMessageDetails newMessage = new CoolApiModels.Messages.NewMessageDetails()
+                    {
+                        ChatId = message.
+                    };
+                    //Заносим изменения в бд
+                    _ = RequestApi<CoolApiModels.Messages.MessageDetails,CoolApiModels.Messages.NewMessageDetails>.Post(newMessage, $"/api/Messages/{message.Message.Id}", message.Token);
+                    break;
+            }
         }
 
         public override void SendData(Transfer data)
