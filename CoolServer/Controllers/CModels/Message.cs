@@ -15,6 +15,10 @@ namespace CoolServer.Controllers.CModels
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
+        /// Отправитель
+        /// </summary>
+        public User Sender { get; set; }
+        /// <summary>
         /// ID чата
         /// </summary>
         public Guid ChatId { get; set; }

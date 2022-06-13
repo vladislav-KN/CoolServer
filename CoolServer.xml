@@ -71,9 +71,14 @@
             ID сообщения
             </summary>
         </member>
-        <member name="P:CoolServer.Controllers.CModels.Message.SenderId">
+        <member name="P:CoolServer.Controllers.CModels.Message.Sender">
             <summary>
-            ID отправителя
+            Отправитель
+            </summary>
+        </member>
+        <member name="P:CoolServer.Controllers.CModels.Message.ChatId">
+            <summary>
+            ID чата
             </summary>
         </member>
         <member name="P:CoolServer.Controllers.CModels.Message.IsViewed">
@@ -130,23 +135,6 @@
             <response code="400">Ошибки возникшие при попытке получить сообщения</response>
             <response code="500">Сервер не отвечает</response>
         </member>
-        <member name="M:CoolServer.Controllers.MessageController.Edit(CoolServer.Controllers.CModels.Chat,System.String,System.Guid)">
-            <summary>
-            Изменить сообщение
-            </summary>
-            <remarks>Awesomeness!</remarks>
-            <response code="200">Сообщения изменены</response>
-            <response code="400">Ошибки возникшие при попытке изменении сообщения</response>
-            <response code="500">Сервер не отвечает</response>
-        </member>
-        <member name="M:CoolServer.Controllers.MessageController.Edit(CoolServer.Controllers.CModels.Chat,System.Guid)">
-            <summary>
-            Удалить сообщение
-            </summary>
-            <response code="200">Сообщения удалено</response>
-            <response code="400">Ошибки возникшие при попытке удалить сообщение</response>
-            <response code="500">Сервер не отвечает</response>
-        </member>
         <member name="T:CoolServer.Controllers.UserController">
             <summary>
             Контроллер для управления пользователь
@@ -185,6 +173,21 @@
              <response code="200">Пользователь обновил пароль</response>
              <response code="400">Ошибки возникшие при попытке сменить пароль</response>
              <response code="500">Сервер не отвечает</response>
+        </member>
+        <member name="T:CoolServer.MessageTransfer.ACTION">
+            <summary>
+            Вариации действий
+            </summary>
+        </member>
+        <member name="T:CoolServer.MessageTransfer.TransferMessages">
+            <summary>
+            Json класс с сообщениями и амортизационными токенами
+            </summary>
+        </member>
+        <member name="P:CoolServer.MessageTransfer.TransferMessages.Message">
+            <summary>
+            передаваемое сообщение
+            </summary>
         </member>
     </members>
 </doc>

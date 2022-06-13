@@ -18,33 +18,27 @@ namespace CoolServer.MessageTransfer
 {
     
     public class MultiTask<T>:IHostedService, IDisposable
-        where T : Connection
+        where T: TcpConnectionHandler
     {
          
         private Timer timer;
         T connection;
         public MultiTask()
         {
-            connection = default(T);
-        }
-
-        public MultiTask(string settings)
-        {
-            connection = default(T);
+            if (typeof(T).Equals(typeof(TcpConnectionHandler)))
+            { 
+                    connection = new TcpConnectionHandler() as T;
+            }
+            
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
 
             try
             {
-                IPAddress ip;
-                if (!IPAddress.TryParse("127.0.0.1", out ip))
-                {
-                    Console.WriteLine("Failed to get IP address, service will listen for client activity on all network interfaces.");
-                    ip = IPAddress.Any;
-                }
+                 
                 
-                var tcpListener = new TcpListener(ip, connection.Port);
+                var tcpListener = new TcpListener(IPAddress.Any, connection.Port);
 
                 tcpListener.Start();
 
@@ -56,15 +50,7 @@ namespace CoolServer.MessageTransfer
 
                 while ((tcpClientTask = await Task.WhenAny(tasks)) != null)
                 {
-                    var tcpListenerPortPair = tasks.First();
-                    var port = connection.Port;
-
-
-                    tasks.Remove(tcpClientTask);
-
-                    // This needs to be async. What to do with its Task?
-                    // It cannot be awaited here.
-                    var handlerTask = connection.Handler(tcpClientTask.Result);
+                    var handlerTask = connection.HandlerMessage(tcpClientTask.Result);
 
                     var new_task = tcpListener.AcceptTcpClientAsync();
 

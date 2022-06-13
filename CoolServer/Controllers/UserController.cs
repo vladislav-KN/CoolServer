@@ -25,9 +25,9 @@ namespace CoolServer.Controllers
         /// <response code="204">Пользователь не найден</response>
         /// <response code="400">Ошибки возникшие при попытке найти пользователей</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpGet("{portion}/{offset}")]
+        [HttpGet("{login}/{portion}/{offset}")]
         [ProducesResponseType(typeof(IEnumerable<User>), 200)]
-        [ProducesResponseType(typeof(IEnumerable<User>), 204)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
         public ActionResult<IEnumerable<User>> Search(string login, int portion, int offset)

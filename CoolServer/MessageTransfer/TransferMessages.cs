@@ -31,11 +31,10 @@ namespace CoolServer.MessageTransfer
     /// </summary>
     public class TransferMessages: Transfer
     {
-        internal ACTION action;
-
         /// <summary>
         /// передаваемое сообщение
         /// </summary>
         public Message Message {get;set;}
+        public bool? ForAll { get; set; }
     }
 }

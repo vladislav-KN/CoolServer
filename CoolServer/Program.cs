@@ -1,5 +1,7 @@
+using CoolServer.MessageTransfer;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
@@ -21,6 +23,7 @@ namespace CoolServer
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                }).ConfigureServices(services =>
+                    services.AddHostedService<MultiTask<TcpConnectionHandler>>());
     }
 }

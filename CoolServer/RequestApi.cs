@@ -56,14 +56,22 @@ namespace CoolServer.MessageTransfer
             client.DefaultRequestHeaders.Remove("Token");
             return response.StatusCode;
         }
-        public static async Task<Uri> Post(K data, string request, string token = "")
+        public static async Task<T> Post(K data, string request, string token = "")
         {
+            T result = default(T);
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
                 client.DefaultRequestHeaders.Add("Token", token);
             HttpResponseMessage response = await client.PostAsJsonAsync(request, data);
-            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonString = response.Content.ReadAsStringAsync()
+                                                .Result
+                                               .Replace("\\", "")
+                                               .Trim(new char[1] { '"' });
+                result = JsonConvert.DeserializeObject<T>(jsonString);
+            }
             client.DefaultRequestHeaders.Remove("Token");
-            return response.Headers.Location;
+            return result;
         }
     }
 }
