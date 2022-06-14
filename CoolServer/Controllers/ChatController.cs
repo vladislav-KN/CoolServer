@@ -46,7 +46,7 @@ namespace CoolServer.Controllers
                     StatusCode = 400
                 };
             }
-            var result = await RequestApi<ChatDetails, Guid>.Get($"api/Chats/{id}", token.ToString()) ;
+            var result = await RequestApi<ChatDetails, Guid>.Get($"Chats/{id}", token.ToString()) ;
             if(result.Item1 != null)
             {
                 List<User> chatUsers = new List<User>();
@@ -93,7 +93,7 @@ namespace CoolServer.Controllers
             {
                 ReceiverId = Chat.ChatMembers.First().Id
             };
-            var result = await RequestApi<ChatDetails, NewChatDetails>.Post(newChat, $"api/Chats");
+            var result = await RequestApi<ChatDetails, NewChatDetails>.Post(newChat, $"Chats");
             if (result.Item1 != null)
             {
                 List<User> chatUsers = new List<User>();
@@ -139,7 +139,7 @@ namespace CoolServer.Controllers
             {
                 ReceiverId = Chat.ChatMembers.First().Id
             };
-            var result = await RequestApi<ChatDetails, NewChatDetails>.Delete($"api/Chats",token.ToString());
+            var result = await RequestApi<ChatDetails, NewChatDetails>.Delete($"Chats",token.ToString());
             if (result.Item1 == System.Net.HttpStatusCode.OK)
             {
                 return true;
@@ -180,7 +180,7 @@ namespace CoolServer.Controllers
                     StatusCode = 400
                 };
             }
-            var result = await RequestApi<ChatsPortionDetails, Guid>.Get($"api/Chats?offset={offset}&portion={portion}", token.ToString());
+            var result = await RequestApi<ChatsPortionDetails, Guid>.Get($"Chats?offset={offset}&portion={portion}", token.ToString());
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 List<Chat> chats = new List<Chat>();
