@@ -47,7 +47,7 @@ namespace CoolServer.Controllers
                     StatusCode = 400
                 };
             }
-            var result = RequestApi<MessagesPortionDetails, Guid>.Get($"Messages?chatId={chat.Id}&offset={offset}&portion={portion}", token.ToString()).Result;
+            var result = await RequestApi<MessagesPortionDetails, Guid>.Get($"Messages?chatId={chat.Id}&offset={offset}&portion={portion}", token.ToString());
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 List<Message> messages = new List<Message>();
