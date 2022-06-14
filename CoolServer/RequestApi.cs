@@ -28,7 +28,7 @@ namespace CoolServer.MessageTransfer
         {
             T result = default(T);
             if(!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
-                client.DefaultRequestHeaders.Add("Token", token);
+                client.DefaultRequestHeaders.Add("", token);
             HttpResponseMessage response = await client.GetAsync(request);
             Tuple<T, HttpStatusCode, ProblemDetails, string> tuple = null;
             ProblemDetails problem = new ProblemDetails();
