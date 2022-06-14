@@ -40,7 +40,7 @@ namespace CoolServer.MessageTransfer
             else 
             {   
                 problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
-                tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, HttpStatusCode.OK, problem);
+                tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
             }
             return tuple;
 
@@ -63,7 +63,7 @@ namespace CoolServer.MessageTransfer
                     break;
                 case HttpStatusCode.BadRequest:
                     problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
-                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, HttpStatusCode.OK, problem);
+                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
                     break;
             }
             return tuple;
@@ -105,7 +105,7 @@ namespace CoolServer.MessageTransfer
                     break;
                 case HttpStatusCode.BadRequest:
                     problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null,CancellationToken.None);
-                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, HttpStatusCode.OK, problem);
+                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
                     break;
             }
             return tuple;

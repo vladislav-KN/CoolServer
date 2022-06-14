@@ -121,7 +121,7 @@ namespace CoolServer.Controllers
         [ProducesResponseType(500)]
         public async Task<ActionResult<User>> RegistrationAsync(string login, string password)
         {
-           var result = await RequestApi<UserDetails, NewUserDetails>.Post(new NewUserDetails() { Login = login, Password = password},$"Users?login={login},password={password}");
+           var result = await RequestApi<UserDetails, NewUserDetails>.Post(new NewUserDetails() { Login = login, Password = password},$"Users");
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 User user = new User()
