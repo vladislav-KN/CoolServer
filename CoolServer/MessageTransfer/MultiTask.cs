@@ -43,8 +43,6 @@ namespace CoolServer.MessageTransfer
 
             try
             {
-                 
-                
                 var tcpListener = new TcpListener(IPAddress.Any, connection.Port);
 
                 tcpListener.Start();

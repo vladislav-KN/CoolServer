@@ -165,7 +165,7 @@ namespace CoolServer.Controllers
                     StatusCode = 400
                 };
             }
-            var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users?password={password}", token);
+            var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users/{password}", token);
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 User newuser = new User()
@@ -183,6 +183,45 @@ namespace CoolServer.Controllers
                 };
             }
  
+        }
+        [HttpPut]
+        [ProducesResponseType(typeof(User), 200)]
+        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(500)]
+        public async Task<ActionResult<User>> ChangeLoginAsync(User user)
+        {
+            StringValues token;
+            if (!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = user.Password }, $"Users?id={user.Id}", token);
+            if (result.Item2 == System.Net.HttpStatusCode.OK)
+            {
+                User newuser = new User()
+                {
+                    Id = result.Item1.Id,
+                    Login = result.Item1.Login
+                };
+                return newuser;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
+
         }
     }
 }
