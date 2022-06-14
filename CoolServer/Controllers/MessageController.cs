@@ -27,7 +27,7 @@ namespace CoolServer.Controllers
         /// <response code="200">Сообщения получены</response>
         /// <response code="400">Ошибки возникшие при попытке получить сообщения</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpGet]
+        [HttpGet{}]
         [ProducesResponseType(typeof(Message), 200)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]

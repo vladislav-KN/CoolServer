@@ -159,7 +159,7 @@ namespace CoolServer.Controllers
         /// <response code="200">Chat получен</response>
         /// <response code="400">Ошибки возникшие при попытке получить чата</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpGet]
+        [HttpGet("{portion}/{offset}")]
         [ProducesResponseType(typeof(IEnumerable<Chat>), 200)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]

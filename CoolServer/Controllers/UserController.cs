@@ -52,12 +52,23 @@ namespace CoolServer.Controllers
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 List<User> users = new List<User>();
-                foreach (var user in result.Item1.Content)
+                if (!(result.Item1.Content is null))
                 {
-                    users.Add(new User() { Id = user.Id, Login = user.Login });
+                    if (result.Item1.Content.Count() == 0)
+                    {
+                        return StatusCode(204);
+                    }
+                    foreach (var user in result.Item1.Content)
+                    {
+                        users.Add(new User() { Id = user.Id, Login = user.Login });
 
+                    }
+                    return users;
                 }
-                return users;
+                else
+                {
+                    return StatusCode(204);
+                }
             }
             else
             {
