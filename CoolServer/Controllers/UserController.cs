@@ -115,13 +115,13 @@ namespace CoolServer.Controllers
         /// <response code="200">Пользователь зарегистрирован</response>
         /// <response code="400">Ошибки возникшие при попытке зарегистрироваться</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpPut("{login}/{password}")]
+        [HttpPost("{login}/{password}")]
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
         public async Task<ActionResult<User>> RegistrationAsync(string login, string password)
         {
-            var result = await RequestApi<UserDetails, NewUserDetails>.Put(new NewUserDetails() { Login = login, Password = password},$"Users");
+           var result = await RequestApi<UserDetails, NewUserDetails>.Post(new NewUserDetails() { Login = login, Password = password},$"Users?login={login},password={password}");
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 Request.Headers.Add("Token", result.Item4);
@@ -146,7 +146,7 @@ namespace CoolServer.Controllers
         /// <response code="200">Пользователь обновил пароль</response>
         /// <response code="400">Ошибки возникшие при попытке сменить пароль</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpPost("{password}")]
+        [HttpPut("{password}")]
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
@@ -166,7 +166,7 @@ namespace CoolServer.Controllers
                     StatusCode = 400
                 };
             }
-            var result = await RequestApi<UserDetails, UserNewDetails>.Post(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users?password={password}", token);
+            var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users?password={password}", token);
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
  

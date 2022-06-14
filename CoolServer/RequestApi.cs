@@ -95,24 +95,28 @@ namespace CoolServer.MessageTransfer
             }
             return tuple;
         }
-        public static async Task<Tuple<T, HttpStatusCode, ProblemDetails>> Post(K data, string request, string token = "")
+        public static async Task<Tuple<T, HttpStatusCode, ProblemDetails, string>> Post(K data, string request, string token = "")
         {
             T result = default(T);
             
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
                 client.DefaultRequestHeaders.Add("Token", token);
             HttpResponseMessage response = await client.PostAsJsonAsync(request, data);
-            Tuple<T, HttpStatusCode, ProblemDetails> tuple = null;
+            Tuple<T, HttpStatusCode, ProblemDetails, string> tuple = null;
             ProblemDetails problem = new ProblemDetails();
             switch (response.StatusCode)
             {
                 case HttpStatusCode.OK:
                     result = response.Content.ReadFromJsonAsync<T>(null, CancellationToken.None).Result;
-                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
+                    if (response.Headers.Contains("Token"))
+                    {
+                        token = response.Headers.GetValues("Token").First();
+                    }
+                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails,string>(result, response.StatusCode, problem,token);
                     break;
                 case HttpStatusCode.BadRequest:
                     problem = response.Content.ReadFromJsonAsync<ProblemDetails>(null,CancellationToken.None).Result;
-                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, HttpStatusCode.OK, problem);
+                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails,string>(result, HttpStatusCode.OK, problem, token);
                     break;
             }
             return tuple;
