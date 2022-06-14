@@ -43,7 +43,12 @@ namespace CoolServer.MessageTransfer
 
             try
             {
-                var tcpListener = new TcpListener(IPAddress.Any, connection.Port);
+                if (!IPAddress.TryParse("127.0.0.1", out var ip))
+                {
+                    Console.WriteLine("Failed to get IP address, service will listen for client activity on all network interfaces.");
+                    ip = IPAddress.Any;
+                }
+                var tcpListener = new TcpListener(ip, connection.Port);
 
                 tcpListener.Start();
 
