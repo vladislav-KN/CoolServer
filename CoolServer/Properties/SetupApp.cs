@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace CoolServer.Properties
 {
-    public class Setup
+    public class SetupApp
     {
-        public string DataBaseHost { get; set; }
+        public string DataBaseUrl { get; set; }
+        public int TCPPort { get; set; }
     }
 }

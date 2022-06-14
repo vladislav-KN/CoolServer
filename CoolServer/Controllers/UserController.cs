@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoolApiModels.Users;
 using CoolServer.Controllers.CModels;
+using Microsoft.Extensions.Primitives;
+using CoolServer.MessageTransfer;
 
 namespace CoolServer.Controllers
 {
@@ -28,11 +30,42 @@ namespace CoolServer.Controllers
         [HttpGet("{login}/{portion}/{offset}")]
         [ProducesResponseType(typeof(IEnumerable<User>), 200)]
         [ProducesResponseType(204)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<IEnumerable<User>> Search(string login, int portion, int offset)
+        public async Task<ActionResult<IEnumerable<User>>> SearchAsync(string login, int portion, int offset)
         {
-            return new List<User>();
+            StringValues token;
+            if (!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            var result = await RequestApi<UsersPortionDetails, Guid>.Get($"Users?offset={offset}&portion={portion}&searchString={login}", token.ToString());
+            if (result.Item2 == System.Net.HttpStatusCode.OK)
+            {
+                List<User> users = new List<User>();
+                foreach (var user in result.Item1.Content)
+                {
+                    users.Add(new User() { Id = user.Id, Login = user.Login });
+
+                }
+                return users;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
         }
         /// <summary>
         /// Вход пользователя
@@ -44,9 +77,26 @@ namespace CoolServer.Controllers
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<User> Login(string login, string password)
+        public async Task<ActionResult<User>> LoginAsync(string login, string password)
         {
-            return new User();
+            var result = await RequestApi<Guid, Guid>.Get($"Users/auth?login={login}&password={password}");
+            if (result.Item2 == System.Net.HttpStatusCode.OK)
+            {
+                Request.Headers.Add("Token",result.Item4);
+                User user = new User()
+                {
+                    Id = result.Item1,
+                    Login = login
+                };
+                return user;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
         }
         /// <summary>
         ///Регистрация
@@ -58,9 +108,26 @@ namespace CoolServer.Controllers
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<User> Registration(string login, string password)
+        public async Task<ActionResult<User>> RegistrationAsync(string login, string password)
         {
-            return new User();
+            var result = await RequestApi<UserDetails, NewUserDetails>.Put(new NewUserDetails() { Login = login, Password = password},$"Users");
+            if (result.Item2 == System.Net.HttpStatusCode.OK)
+            {
+                Request.Headers.Add("Token", result.Item4);
+                User user = new User()
+                {
+                    Id = result.Item1.Id,
+                    Login = result.Item1.Login
+                };
+                return user;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
         }
         /// <summary>
         ///Новый пароль
@@ -72,9 +139,41 @@ namespace CoolServer.Controllers
         [ProducesResponseType(typeof(User), 200)]
         [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<User> NewPassword(User user, string password)
+        public async Task<ActionResult<User>> NewPasswordAsync(User user, string password)
         {
-            return new User();
+            StringValues token;
+            if (!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            var result = await RequestApi<UserDetails, UserNewDetails>.Post(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users?password={password}", token);
+            if (result.Item2 == System.Net.HttpStatusCode.OK)
+            {
+ 
+                User newuser = new User()
+                {
+                    Id = result.Item1.Id,
+                    Login = result.Item1.Login
+                };
+                return newuser;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
+ 
         }
     }
 }

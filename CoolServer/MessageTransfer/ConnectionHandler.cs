@@ -1,4 +1,5 @@
-﻿using CoolApiModels.Users;
+﻿using CoolApiModels.Messages;
+using CoolApiModels.Users;
 using CoolServer.Controllers.CModels;
 using CoolServer.Interfaces;
 using Newtonsoft.Json;
@@ -98,35 +99,36 @@ namespace CoolServer.MessageTransfer
             {
                 case ACTION.CHNG:
                     //Заносим изменения в бд
-                    CoolApiModels.Messages.MessageNewDetails messageNew = new CoolApiModels.Messages.MessageNewDetails()
+                    MessageNewDetails messageNew = new MessageNewDetails()
                     {
                         Text = message.Message.Text,
                         Attachments = message.Message.Attachments,
                         IsViewed = message.Message.IsViewed
                     };
-                    _ = RequestApi<CoolApiModels.Messages.MessageDetails, CoolApiModels.Messages.MessageNewDetails>.Put(messageNew, $"/api/Messages/{message.Message.Id}", message.Token);
+                    _ = RequestApi<MessageDetails, MessageNewDetails>.Put(messageNew, $"Messages/{message.Message.Id}", message.Token);
                     break;
                 case ACTION.DEL:
                     //Заносим изменения в бд
                     if (message.ForAll is null)
                         message.ForAll = false;
-                    _ = RequestApi<object,object>.Delete($"/api/Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
+                    _ = RequestApi<object,object>.Delete($"Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
                      
                     break;
                 case ACTION.SEND:
-                    CoolApiModels.Messages.NewMessageDetails newMessage = new CoolApiModels.Messages.NewMessageDetails()
+                    NewMessageDetails newMessage = new NewMessageDetails()
                     {
                         ChatId = message.Message.ChatId,
                         Attachments = message.Message.Attachments,
                         Text = message.Message.Text
                     };
                     //Заносим изменения в бд
-                    _ = RequestApi<CoolApiModels.Messages.MessageDetails,CoolApiModels.Messages.NewMessageDetails>.Post(newMessage, $"/api/Messages/{message.Message.Id}", message.Token);
+                    _ = RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages/{message.Message.Id}", message.Token);
                     break;
 
             }
-            var chat = await RequestApi<CoolApiModels.Chats.ChatDetails, int>.Get($"/api/Chats/{message.Message.ChatId}", message.Token);
-            SendMessage(message, connection.FindUser(chat.ChatMembers.ToList().Select(x=>x).Where(x=>x.Id!=message.Message.Sender.Id)));
+            var chat = await RequestApi<CoolApiModels.Chats.ChatDetails, int>.Get($"Chats/{message.Message.ChatId}", message.Token);
+            if(chat.Item1 != null)
+                SendMessage(message, connection.FindUser(chat.Item1.ChatMembers.ToList().Select(x=>x).Where(x=>x.Id!=message.Message.Sender.Id)));
         }
 
  

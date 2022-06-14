@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoolApiModels.Users;
 using CoolServer.Controllers.CModels;
+using CoolServer.MessageTransfer;
+using Microsoft.Extensions.Primitives;
 
 namespace CoolServer.Controllers
 {
@@ -26,11 +28,40 @@ namespace CoolServer.Controllers
         /// <response code="500">Сервер не отвечает</response>
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Chat), 200)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<Chat> GetByGuid(Guid id)
+        public async Task<ActionResult<Chat>> GetByGuidAsync(Guid id)
         {
-            return new Chat();
+            StringValues token;
+            if(!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            var result = await RequestApi<ChatDetails, Guid>.Get($"api/Chats/{id}", token.ToString()) ;
+            if(result.Item1 != null)
+            {
+                List<User> chatUsers = new List<User>();
+                foreach (var us in result.Item1.ChatMembers)
+                    chatUsers.Add(new User() { Id = us.Id, Login = us.Login });
+                return new Chat() { ChatMembers = chatUsers, Id = result.Item1.Id, CreationTimeLocal = result.Item1.CreationTimeUtc };
+            }
+            else
+            {
+                return new ObjectResult(result.Item3)
+                {
+                    StatusCode = 400
+                };
+            }
+            
         }
         /// <summary>
         /// Создаёт чат пользователя
@@ -40,11 +71,43 @@ namespace CoolServer.Controllers
         /// <response code="500">Сервер не отвечает</response>
         [HttpPut]
         [ProducesResponseType(typeof(Chat), 200)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<Chat> Create(Chat Chat)
+        public async Task<ActionResult<Chat>> CreateAsync(Chat Chat)
         {
-            return new Chat();
+            StringValues token;
+            if (!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            NewChatDetails newChat = new NewChatDetails()
+            {
+                ReceiverId = Chat.ChatMembers.First().Id
+            };
+            var result = await RequestApi<ChatDetails, NewChatDetails>.Post(newChat, $"api/Chats");
+            if (result.Item1 != null)
+            {
+                List<User> chatUsers = new List<User>();
+                foreach (var us in result.Item1.ChatMembers)
+                    chatUsers.Add(new User() { Id = us.Id, Login = us.Login });
+                return new Chat() { ChatMembers = chatUsers, Id = result.Item1.Id, CreationTimeLocal = result.Item1.CreationTimeUtc };
+            }
+            else
+            {
+                return new ObjectResult(result.Item3)
+                {
+                    StatusCode = 400
+                };
+            }
         }
         /// <summary>
         /// Удалить 
@@ -54,11 +117,41 @@ namespace CoolServer.Controllers
         /// <response code="500">Сервер не отвечает</response>
         [HttpDelete]
         [ProducesResponseType(typeof(bool), 200)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<bool> Delete(Chat Chat)
+        public async Task<ActionResult<bool>> DeleteAsync(Chat Chat)
         {
-            return true;
+            StringValues token;
+            if (!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            NewChatDetails newChat = new NewChatDetails()
+            {
+                ReceiverId = Chat.ChatMembers.First().Id
+            };
+            var result = await RequestApi<ChatDetails, NewChatDetails>.Delete($"api/Chats",token.ToString());
+            if (result.Item1 == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
+            
         }
         /// <summary>
         /// Получает список чатов заданного количества
@@ -66,13 +159,45 @@ namespace CoolServer.Controllers
         /// <response code="200">Chat получен</response>
         /// <response code="400">Ошибки возникшие при попытке получить чата</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpGet("{number}/{offset}")]
-        [ProducesResponseType(typeof(Chat), 200)]
-        [ProducesResponseType(typeof(IDictionary<string,string>), 400)]
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Chat>), 200)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<IEnumerable<Chat>> GetPortion(User user, int number, int offset)
+        public async Task<ActionResult<IEnumerable<Chat>>> GetPortionAsync(int portion, int offset)
         {
-            return new List<Chat>();
+            StringValues token;
+            if (!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            var result = await RequestApi<ChatsPortionDetails, Guid>.Get($"api/Chats?offset={offset}&portion={portion}", token.ToString());
+            if (result.Item2 == System.Net.HttpStatusCode.OK)
+            {
+                List<Chat> chats = new List<Chat>();
+                foreach (var chat in result.Item1.Content) 
+                {
+                    chats.Add(new Chat() { Id = chat.Id, CreationTimeLocal = chat.CreationTimeUtc });
+
+                }          
+                return chats;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
+          
         }
     }
 }

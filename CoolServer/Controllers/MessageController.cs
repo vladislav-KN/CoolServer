@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using CoolApiModels.Messages;
 using CoolApiModels.Chats;
 using CoolServer.Controllers.CModels;
+using Microsoft.Extensions.Primitives;
+using CoolServer.MessageTransfer;
+using CoolApiModels.Users;
 
 namespace CoolServer.Controllers
 {
@@ -24,12 +27,54 @@ namespace CoolServer.Controllers
         /// <response code="200">Сообщения получены</response>
         /// <response code="400">Ошибки возникшие при попытке получить сообщения</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpGet("{number}/{offset}")]
+        [HttpGet]
         [ProducesResponseType(typeof(Message), 200)]
-        [ProducesResponseType(typeof(IDictionary<string, string>), 400)]
+        [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
-        public ActionResult<IEnumerable<Message>> Get(Chat chat, int number, int offset)
+        public async Task<ActionResult<IEnumerable<Message>>> GetAsync(Chat chat, int portion, int offset)
         {
+            StringValues token;
+            if (!Request.Headers.TryGetValue("Token", out token))
+            {
+                ProblemDetails problem = new ProblemDetails()
+                {
+                    Detail = "Server didn't receive Token ",
+                    Status = 400,
+                    Title = "Access denied"
+                };
+                return new ObjectResult(problem)
+                {
+                    StatusCode = 400
+                };
+            }
+            var result = RequestApi<MessagesPortionDetails, Guid>.Get($"Messages?chatId={chat.Id}&offset={offset}&portion={portion}", token.ToString()).Result;
+            if (result.Item2 == System.Net.HttpStatusCode.OK)
+            {
+                List<Message> messages = new List<Message>();
+                foreach (var message in result.Item1.Content)
+                {
+                    var user = await RequestApi<UserDetails,Guid>.Get($"Users/{message.SenderId}", token.ToString());
+                    if(user.Item2 == System.Net.HttpStatusCode.OK)
+                        messages.Add(new Message()
+                        {
+                            Id = message.Id,
+                            AttachmentsCount = message.AttachmentsCount,
+                            IsViewed = message.IsViewed,
+                            Sender = new User() { Id = user.Item1.Id, Login = user.Item1.Login },
+                            Text = message.Text
+                        }
+                            );
+
+                }
+                return messages;
+            }
+            else
+            {
+                return new ObjectResult(result.Item2)
+                {
+                    StatusCode = 400
+                };
+            }
             return new List<Message>();
         }
     }

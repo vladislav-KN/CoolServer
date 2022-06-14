@@ -9,7 +9,7 @@
             Контроллер для управления чатами
             </summary>
         </member>
-        <member name="M:CoolServer.Controllers.ChatController.GetByGuid(System.Guid)">
+        <member name="M:CoolServer.Controllers.ChatController.GetByGuidAsync(System.Guid)">
             <summary>
             Передаёт чат пользователя по id
             </summary>
@@ -17,7 +17,7 @@
             <response code="400">Ошибки возникшие при попытке получить чата</response>
             <response code="500">Сервер не отвечает</response>
         </member>
-        <member name="M:CoolServer.Controllers.ChatController.Create(CoolServer.Controllers.CModels.Chat)">
+        <member name="M:CoolServer.Controllers.ChatController.CreateAsync(CoolServer.Controllers.CModels.Chat)">
             <summary>
             Создаёт чат пользователя
             </summary>
@@ -25,7 +25,7 @@
             <response code="400">Ошибки возникшие при попытке создать чата</response>
             <response code="500">Сервер не отвечает</response>
         </member>
-        <member name="M:CoolServer.Controllers.ChatController.Delete(CoolServer.Controllers.CModels.Chat)">
+        <member name="M:CoolServer.Controllers.ChatController.DeleteAsync(CoolServer.Controllers.CModels.Chat)">
             <summary>
             Удалить 
             </summary>
@@ -33,7 +33,7 @@
             <response code="400">Ошибки возникшие при попытке создать чата</response>
             <response code="500">Сервер не отвечает</response>
         </member>
-        <member name="M:CoolServer.Controllers.ChatController.GetPortion(CoolServer.Controllers.CModels.User,System.Int32,System.Int32)">
+        <member name="M:CoolServer.Controllers.ChatController.GetPortionAsync(System.Int32,System.Int32)">
             <summary>
             Получает список чатов заданного количества
             </summary>
@@ -126,7 +126,7 @@
             Контроллер для управления сообщения
             </summary>
         </member>
-        <member name="M:CoolServer.Controllers.MessageController.Get(CoolServer.Controllers.CModels.Chat,System.Int32,System.Int32)">
+        <member name="M:CoolServer.Controllers.MessageController.GetAsync(CoolServer.Controllers.CModels.Chat,System.Int32,System.Int32)">
             <summary>
             Получает заданное количество сообщений в чате
             </summary>
@@ -140,7 +140,7 @@
             Контроллер для управления пользователь
             </summary>
         </member>
-        <member name="M:CoolServer.Controllers.UserController.Search(System.String,System.Int32,System.Int32)">
+        <member name="M:CoolServer.Controllers.UserController.SearchAsync(System.String,System.Int32,System.Int32)">
             <summary>
             Поиск пользователей по логину
             </summary>
@@ -150,7 +150,7 @@
             <response code="400">Ошибки возникшие при попытке найти пользователей</response>
             <response code="500">Сервер не отвечает</response>
         </member>
-        <member name="M:CoolServer.Controllers.UserController.Login(System.String,System.String)">
+        <member name="M:CoolServer.Controllers.UserController.LoginAsync(System.String,System.String)">
             <summary>
             Вход пользователя
             </summary>
@@ -158,7 +158,7 @@
             <response code="400">Ошибки возникшие при попытке войти</response>
             <response code="500">Сервер не отвечает</response>
         </member>
-        <member name="M:CoolServer.Controllers.UserController.Registration(System.String,System.String)">
+        <member name="M:CoolServer.Controllers.UserController.RegistrationAsync(System.String,System.String)">
              <summary>
             Регистрация
              </summary>
@@ -166,7 +166,7 @@
              <response code="400">Ошибки возникшие при попытке зарегистрироваться</response>
              <response code="500">Сервер не отвечает</response>
         </member>
-        <member name="M:CoolServer.Controllers.UserController.NewPassword(CoolServer.Controllers.CModels.User,System.String)">
+        <member name="M:CoolServer.Controllers.UserController.NewPasswordAsync(CoolServer.Controllers.CModels.User,System.String)">
              <summary>
             Новый пароль
              </summary>

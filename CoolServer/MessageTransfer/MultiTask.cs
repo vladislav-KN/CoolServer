@@ -78,7 +78,7 @@ namespace CoolServer.MessageTransfer
         //                Attachments = message.Message.Attachments,
         //                IsViewed = message.Message.IsViewed
         //            };
-        //            _ = RequestApi<CoolApiModels.Messages.MessageNewDetails>.Put(newMessage, $"/api/Messages/{message.Message.Id}", message.token);
+        //            _ = RequestApi<CoolApiModels.Messages.MessageNewDetails>.Put(newMessage, $"Messages/{message.Message.Id}", message.token);
         //            break;
         //        case ACTION.DEL:
         //            //Заносим изменения в бд
