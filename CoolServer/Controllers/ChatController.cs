@@ -161,6 +161,7 @@ namespace CoolServer.Controllers
         /// <response code="500">Сервер не отвечает</response>
         [HttpGet("{portion}/{offset}")]
         [ProducesResponseType(typeof(IEnumerable<Chat>), 200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
         public async Task<ActionResult<IEnumerable<Chat>>> GetPortionAsync(int portion, int offset)
@@ -183,12 +184,25 @@ namespace CoolServer.Controllers
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 List<Chat> chats = new List<Chat>();
-                foreach (var chat in result.Item1.Content) 
+                if (!(result.Item1.Content is null))
                 {
-                    chats.Add(new Chat() { Id = chat.Id, CreationTimeLocal = chat.CreationTimeUtc });
+                    if (result.Item1.Content.Count() == 0)
+                    {
+                        return StatusCode(204);
+                    }
+                    foreach (var chat in result.Item1.Content)
+                    {
+                        chats.Add(new Chat() { Id = chat.Id, CreationTimeLocal = chat.CreationTimeUtc });
 
-                }          
-                return chats;
+                    }
+              
+                    return chats;
+                }
+                else
+                {
+                    return StatusCode(204);
+                }
+               
             }
             else
             {

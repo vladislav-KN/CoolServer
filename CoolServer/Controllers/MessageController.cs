@@ -29,6 +29,7 @@ namespace CoolServer.Controllers
         /// <response code="500">Сервер не отвечает</response>
         [HttpGet("{portion}/{offset}")]
         [ProducesResponseType(typeof(Message), 200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
         public async Task<ActionResult<IEnumerable<Message>>> GetAsync(Chat chat, int portion, int offset)
@@ -51,22 +52,34 @@ namespace CoolServer.Controllers
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 List<Message> messages = new List<Message>();
-                foreach (var message in result.Item1.Content)
+                if (!(result.Item1.Content is null))
                 {
-                    var user = await RequestApi<UserDetails,Guid>.Get($"Users/{message.SenderId}", token.ToString());
-                    if(user.Item2 == System.Net.HttpStatusCode.OK)
-                        messages.Add(new Message()
-                        {
-                            Id = message.Id,
-                            AttachmentsCount = message.AttachmentsCount,
-                            IsViewed = message.IsViewed,
-                            Sender = new User() { Id = user.Item1.Id, Login = user.Item1.Login },
-                            Text = message.Text
-                        }
-                            );
+                    if (result.Item1.Content.Count() == 0)
+                    {
+                        return StatusCode(204);
+                    }
+                    foreach (var message in result.Item1.Content)
+                    {
+                        var user = await RequestApi<UserDetails, Guid>.Get($"Users/{message.SenderId}", token.ToString());
+                        if (user.Item2 == System.Net.HttpStatusCode.OK)
+                            messages.Add(new Message()
+                            {
+                                Id = message.Id,
+                                AttachmentsCount = message.AttachmentsCount,
+                                IsViewed = message.IsViewed,
+                                Sender = new User() { Id = user.Item1.Id, Login = user.Item1.Login },
+                                Text = message.Text
+                            }
+                        );
 
+                    }
+                    return messages;
                 }
-                return messages;
+                else
+                {
+                    return StatusCode(204);
+                }
+                
             }
             else
             {

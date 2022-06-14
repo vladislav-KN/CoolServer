@@ -39,7 +39,7 @@ namespace CoolServer.Controllers
             {
                 ProblemDetails problem = new ProblemDetails()
                 {
-                    Detail = "Server didn't receive Token ",
+                    Detail = "Server didn't receive Token",
                     Status = 400,
                     Title = "Access denied"
                 };
@@ -121,7 +121,7 @@ namespace CoolServer.Controllers
         [ProducesResponseType(500)]
         public async Task<ActionResult<User>> RegistrationAsync(string login, string password)
         {
-           var result = await RequestApi<UserDetails, NewUserDetails>.Post(new NewUserDetails() { Login = login, Password = password},$"Users");
+            var result = await RequestApi<UserDetails, NewUserDetails>.Post(new NewUserDetails() { Login = login, Password = password},$"Users");
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 User user = new User()
