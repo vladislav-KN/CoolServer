@@ -15,7 +15,7 @@ namespace CoolServer.MessageTransfer
     public class RequestApi<T,K>
     {
  
-        static HttpClient client { 
+        static HttpClient cln { 
             get {
  
                 HttpClient httpClient = new HttpClient();
@@ -26,6 +26,7 @@ namespace CoolServer.MessageTransfer
         }  
         public static async Task<Tuple<T, HttpStatusCode, ProblemDetails>> Get(string request, string token = "")
         {
+            HttpClient client = cln;
             T result = default(T);
             if(!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
@@ -48,6 +49,7 @@ namespace CoolServer.MessageTransfer
         
         public static async Task<Tuple<T, HttpStatusCode, ProblemDetails>> Put(K data,string request, string token = "")
         {
+            HttpClient client = cln;
             T result = default(T);
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
@@ -71,6 +73,7 @@ namespace CoolServer.MessageTransfer
         }
         public static async Task<Tuple<HttpStatusCode, ProblemDetails>> Delete(string request, string token = "")
         {
+            HttpClient client = cln;
             Tuple<HttpStatusCode, ProblemDetails> tuple = null;
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
@@ -90,6 +93,7 @@ namespace CoolServer.MessageTransfer
         }
         public static async Task<Tuple<T, HttpStatusCode, ProblemDetails>> Post(K data, string request, string token = "")
         {
+            HttpClient client = cln;
             T result = default(T);
             
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
