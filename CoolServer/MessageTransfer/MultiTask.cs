@@ -13,6 +13,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using CoolServer.Interfaces;
+using CoolServer.Properties;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace CoolServer.MessageTransfer
 {
@@ -20,14 +23,18 @@ namespace CoolServer.MessageTransfer
     public class MultiTask<T>:IHostedService, IDisposable
         where T: TcpConnectionHandler
     {
-         
+ 
         private Timer timer;
         T connection;
-        public MultiTask()
+        public MultiTask(IConfiguration _config)
         {
+          
             if (typeof(T).Equals(typeof(TcpConnectionHandler)))
-            { 
-                    connection = new TcpConnectionHandler() as T;
+            {
+ 
+ 
+                connection = new TcpConnectionHandler(40000) as T;
+             
             }
             
         }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
@@ -35,6 +36,7 @@ namespace CoolServer
         {
             
             services.AddControllers();
+ 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoolServer", Version = "v1" });
@@ -49,10 +51,9 @@ namespace CoolServer
                     }
                  );
 
-                var filePath = Path.Combine(System.AppContext.BaseDirectory, "CoolServer.xml");
-                c.IncludeXmlComments(filePath);
+          
             });
-            services.Configure<SetupApp>(Configuration.GetSection("Setup"));
+ 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

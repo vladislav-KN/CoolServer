@@ -14,12 +14,12 @@ namespace CoolServer.MessageTransfer
 {
     public class RequestApi<T,K>
     {
-        public static IServiceProvider ServiceProvider;
+ 
         static HttpClient client { 
             get {
-                SetupApp setup = ServiceProvider.GetService(typeof(SetupApp)) as SetupApp;
+ 
                 HttpClient httpClient = new HttpClient();
-                httpClient.BaseAddress = new Uri(setup.DataBaseUrl);
+                httpClient.BaseAddress = new Uri("https://localhost:44359/api/");
                 return httpClient;
             }  
                 
