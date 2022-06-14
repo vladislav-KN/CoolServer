@@ -8,6 +8,7 @@ namespace CoolServer.Controllers.CModels
     /// <summary>
     /// Чат пользователя
     /// </summary>
+    [Serializable]
     public class Chat
     {
         /// <summary>

@@ -43,22 +43,24 @@ namespace CoolServer.Controllers
                 };
                 return new ObjectResult(problem)
                 {
-                    StatusCode = 400
+                    StatusCode= 400
                 };
             }
             var result = await RequestApi<ChatDetails, Guid>.Get($"Chats/{id}", token.ToString()) ;
-            if(result.Item1 != null)
+            if (result.Item1 != null)
             {
                 List<User> chatUsers = new List<User>();
                 foreach (var us in result.Item1.ChatMembers)
-                    chatUsers.Add(new User() { Id = us.Id, Login = us.Login });
+                { 
+                    chatUsers.Add(new User() { Id = us.Id, Login = us.Login }); 
+                }
                 return new Chat() { ChatMembers = chatUsers, Id = result.Item1.Id, CreationTimeLocal = result.Item1.CreationTimeUtc };
             }
             else
             {
                 return new ObjectResult(result.Item3)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
             
@@ -86,14 +88,14 @@ namespace CoolServer.Controllers
                 };
                 return new ObjectResult(problem)
                 {
-                    StatusCode = 400
+                    StatusCode= 400
                 };
             }
             NewChatDetails newChat = new NewChatDetails()
             {
                 ReceiverId = Chat.ChatMembers.First().Id
             };
-            var result = await RequestApi<ChatDetails, NewChatDetails>.Post(newChat, $"Chats");
+            var result = await RequestApi<ChatDetails, NewChatDetails>.Post(newChat, $"Chats", token.ToString());
             if (result.Item1 != null)
             {
                 List<User> chatUsers = new List<User>();
@@ -105,7 +107,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item3)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
         }
@@ -132,7 +134,7 @@ namespace CoolServer.Controllers
                 };
                 return new ObjectResult(problem)
                 {
-                    StatusCode = 400
+                    StatusCode= 400
                 };
             }
             NewChatDetails newChat = new NewChatDetails()
@@ -148,7 +150,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item2)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item1
                 };
             }
             
@@ -177,7 +179,7 @@ namespace CoolServer.Controllers
                 };
                 return new ObjectResult(problem)
                 {
-                    StatusCode = 400
+                    StatusCode= 400
                 };
             }
             var result = await RequestApi<ChatsPortionDetails, Guid>.Get($"Chats?offset={offset}&portion={portion}", token.ToString());
@@ -186,16 +188,28 @@ namespace CoolServer.Controllers
                 List<Chat> chats = new List<Chat>();
                 if (!(result.Item1.Content is null))
                 {
+
                     if (result.Item1.Content.Count() == 0)
                     {
                         return StatusCode(204);
                     }
                     foreach (var chat in result.Item1.Content)
                     {
-                        chats.Add(new Chat() { Id = chat.Id, CreationTimeLocal = chat.CreationTimeUtc });
-
+                        var resultGet = await RequestApi<ChatDetails, Guid>.Get($"Chats/{chat.Id}", token.ToString());
+                        if (resultGet.Item1 != null)
+                        {
+                            List<User> chatUsers = new List<User>();
+                            foreach (var us in resultGet.Item1.ChatMembers)
+                            {
+                                chatUsers.Add(new User() { Id = us.Id, Login = us.Login });
+                            }
+                            chats.Add(new Chat() { ChatMembers = chatUsers, Id = resultGet.Item1.Id, CreationTimeLocal = resultGet.Item1.CreationTimeUtc });
+                        }
                     }
-              
+                    if (chats.Count == 0)
+                    {
+                        return StatusCode(204);
+                    }
                     return chats;
                 }
                 else
@@ -206,9 +220,9 @@ namespace CoolServer.Controllers
             }
             else
             {
-                return new ObjectResult(result.Item2)
+                return new ObjectResult(result.Item3)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
           

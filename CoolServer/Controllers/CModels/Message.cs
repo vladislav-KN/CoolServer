@@ -8,6 +8,7 @@ namespace CoolServer.Controllers.CModels
     /// <summary>
     /// Сообщение пользователя
     /// </summary>
+    [Serializable]
     public class Message
     {
         /// <summary>

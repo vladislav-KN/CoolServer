@@ -90,7 +90,7 @@ namespace CoolServer.MessageTransfer
         {
             var stream = client.GetStream();
             var binf = new BinaryFormatter();
-            var message = JsonConvert.DeserializeObject(binf.Deserialize(stream) as string) as TransferMessages;
+            var message =  binf.Deserialize(stream) as TransferMessages;
             if (!connection.TcpUsers.ContainsKey(message.Message.Sender.Id))
             {
                 connection.Add(message.Message.Sender.Id, client);

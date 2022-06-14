@@ -10,6 +10,7 @@ namespace CoolServer.Controllers.CModels
     /// <summary>
     /// Пользователь
     /// </summary>
+    [Serializable]
     public class User
     {
         /// <summary>

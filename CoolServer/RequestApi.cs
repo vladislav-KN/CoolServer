@@ -57,16 +57,15 @@ namespace CoolServer.MessageTransfer
                 request, data);
             Tuple<T, HttpStatusCode, ProblemDetails> tuple = null;
             ProblemDetails problem = new ProblemDetails();
-            switch (response.StatusCode)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                case HttpStatusCode.OK:
-                    result = await response.Content.ReadFromJsonAsync<T>(null, CancellationToken.None);
-                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
-                    break;
-                case HttpStatusCode.BadRequest:
-                    problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
-                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
-                    break;
+                result = await response.Content.ReadFromJsonAsync<T>(null, CancellationToken.None);
+                tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
+            }
+            else
+            {
+                problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
+                tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
             }
             return tuple;
 
@@ -79,16 +78,16 @@ namespace CoolServer.MessageTransfer
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await client.DeleteAsync(request);
             ProblemDetails problem = new ProblemDetails();
-            switch (response.StatusCode)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                case HttpStatusCode.OK:
-                    tuple = new Tuple<HttpStatusCode, ProblemDetails>(response.StatusCode, problem);
-                    break;
-                case HttpStatusCode.BadRequest:
-                    problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
-                    tuple = new Tuple<HttpStatusCode, ProblemDetails>(response.StatusCode, problem);
-                    break;
+                tuple = new Tuple<HttpStatusCode, ProblemDetails>(response.StatusCode, problem);
             }
+            else
+            {
+                problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null, CancellationToken.None);
+                tuple = new Tuple<HttpStatusCode, ProblemDetails>(response.StatusCode, problem);
+            }
+ 
             return tuple;
         }
         public static async Task<Tuple<T, HttpStatusCode, ProblemDetails>> Post(K data, string request, string token = "")
@@ -101,16 +100,14 @@ namespace CoolServer.MessageTransfer
             HttpResponseMessage response = await client.PostAsJsonAsync(request, data);
             Tuple<T, HttpStatusCode, ProblemDetails> tuple = null;
             ProblemDetails problem = new ProblemDetails();
-            switch (response.StatusCode)
+            if(response.StatusCode == HttpStatusCode.OK)
             {
-                case HttpStatusCode.OK:
-                    result = await response.Content.ReadFromJsonAsync<T>(null, CancellationToken.None);
-                    tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
-                    break;
-                case HttpStatusCode.BadRequest:
+                result = await response.Content.ReadFromJsonAsync<T>(null, CancellationToken.None);
+                tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
+            }        
+            else{ 
                     problem = await response.Content.ReadFromJsonAsync<ProblemDetails>(null,CancellationToken.None);
                     tuple = new Tuple<T, HttpStatusCode, ProblemDetails>(result, response.StatusCode, problem);
-                    break;
             }
             return tuple;
         }

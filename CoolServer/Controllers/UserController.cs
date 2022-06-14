@@ -74,7 +74,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item2)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
         }
@@ -105,7 +105,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item2)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
         }
@@ -135,7 +135,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item2)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
         }
@@ -162,7 +162,7 @@ namespace CoolServer.Controllers
                 };
                 return new ObjectResult(problem)
                 {
-                    StatusCode = 400
+                    StatusCode= 400
                 };
             }
             var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users/{password}", token);
@@ -179,7 +179,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item2)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
  
@@ -218,7 +218,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item2)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
 

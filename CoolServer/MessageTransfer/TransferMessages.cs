@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoolServer.MessageTransfer
 {
+    [Serializable]
     public abstract class Transfer
     {
         public string Token { get; private set; }
@@ -19,6 +20,7 @@ namespace CoolServer.MessageTransfer
     /// <summary>
     /// Вариации действий
     /// </summary>
+    [Serializable]
     public enum ACTION
     {
         SEND,
@@ -29,12 +31,14 @@ namespace CoolServer.MessageTransfer
     /// <summary>
     /// Json класс с сообщениями и амортизационными токенами
     /// </summary>
+    [Serializable]
     public class TransferMessages: Transfer
     {
         /// <summary>
         /// передаваемое сообщение
         /// </summary>
         public Message Message {get;set;}
+
         public bool? ForAll { get; set; }
     }
 }

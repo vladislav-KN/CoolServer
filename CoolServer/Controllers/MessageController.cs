@@ -85,7 +85,7 @@ namespace CoolServer.Controllers
             {
                 return new ObjectResult(result.Item2)
                 {
-                    StatusCode = 400
+                    StatusCode = (int)result.Item2
                 };
             }
         }
