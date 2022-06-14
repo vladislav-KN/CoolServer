@@ -90,13 +90,13 @@ namespace CoolServer.Controllers
         [ProducesResponseType(500)]
         public async Task<ActionResult<User>> LoginAsync(string login, string password)
         {
-            var result = await RequestApi<Guid, Guid>.Get($"Users/auth?login={login}&password={password}");
+            var result = await RequestApi<AuthenticatedResult, Guid>.Get($"Users/auth?login={login}&password={password}");
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
-                Request.Headers.Add("Token",result.Item4);
+                Response.Headers.Add("Token",result.Item1.Token);
                 User user = new User()
                 {
-                    Id = result.Item1,
+                    Id = result.Item1.UserId,
                     Login = login
                 };
                 return user;
@@ -124,7 +124,6 @@ namespace CoolServer.Controllers
            var result = await RequestApi<UserDetails, NewUserDetails>.Post(new NewUserDetails() { Login = login, Password = password},$"Users?login={login},password={password}");
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
-                Request.Headers.Add("Token", result.Item4);
                 User user = new User()
                 {
                     Id = result.Item1.Id,
@@ -169,7 +168,6 @@ namespace CoolServer.Controllers
             var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users?password={password}", token);
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
- 
                 User newuser = new User()
                 {
                     Id = result.Item1.Id,

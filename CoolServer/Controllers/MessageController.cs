@@ -75,7 +75,6 @@ namespace CoolServer.Controllers
                     StatusCode = 400
                 };
             }
-            return new List<Message>();
         }
     }
 }
