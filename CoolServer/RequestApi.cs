@@ -28,7 +28,7 @@ namespace CoolServer.MessageTransfer
         {
             T result = default(T);
             if(!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
-                client.DefaultRequestHeaders.Add("", token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await client.GetAsync(request);
             Tuple<T, HttpStatusCode, ProblemDetails, string> tuple = null;
             ProblemDetails problem = new ProblemDetails();
@@ -53,7 +53,7 @@ namespace CoolServer.MessageTransfer
         {
             T result = default(T);
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
-                client.DefaultRequestHeaders.Add("Token", token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await client.PutAsJsonAsync(
                 request, data);
             Tuple<T, HttpStatusCode, ProblemDetails, string> tuple = null;
@@ -80,7 +80,7 @@ namespace CoolServer.MessageTransfer
         {
             Tuple<HttpStatusCode, ProblemDetails> tuple = null;
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
-                client.DefaultRequestHeaders.Add("Token", token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await client.DeleteAsync(request);
             ProblemDetails problem = new ProblemDetails();
             switch (response.StatusCode)
@@ -100,7 +100,7 @@ namespace CoolServer.MessageTransfer
             T result = default(T);
             
             if (!(string.IsNullOrWhiteSpace(token) && string.IsNullOrEmpty(token)))
-                client.DefaultRequestHeaders.Add("Token", token);
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             HttpResponseMessage response = await client.PostAsJsonAsync(request, data);
             Tuple<T, HttpStatusCode, ProblemDetails, string> tuple = null;
             ProblemDetails problem = new ProblemDetails();
