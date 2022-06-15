@@ -133,21 +133,24 @@ namespace CoolServer.MessageTransfer
 
             }
             var chat = await RequestApi<CoolApiModels.Chats.ChatDetails, int>.Get($"Chats/{message.Message.ChatId}", message.Token);
-            if(chat.Item1 != null)
-                SendMessage(message, connection.FindUser(chat.Item1.ChatMembers.Where(x=>x.Id!=message.Message.Sender.Id)));
+            if(!(messageCU is null))
+                if(!(messageCU.Item1 is null))
+                    message.Message.Id = messageCU.Item1.Id;
+ 
+            if (chat.Item1 != null)
+                SendMessage(message, connection.FindUser(chat.Item1.ChatMembers));
         }
 
  
-        public void SendMessage(Transfer data, List<TcpClient> clients)
+        public void SendMessage(TransferMessages data, List<TcpClient> clients)
         {
-            base.SendData(data);
             foreach(TcpClient cl in clients)
             {
                 if (cl.Connected)
                 {
                     var stream = cl.GetStream();
                     var binf = new BinaryFormatter();
-                    binf.Serialize(stream, jsonString);
+                    binf.Serialize(stream, data);
                 }
                 else
                 {
