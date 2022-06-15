@@ -1,6 +1,7 @@
 ﻿using CoolApiModels.Messages;
 using CoolApiModels.Users;
 using CoolServer.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,10 @@ namespace CoolServer.MessageTransfer
             List<TcpClient> tcpClients = new List<TcpClient>();
             foreach(UserDetails user in users)
             {
-                tcpClients.Add(tcpUsers.Where(x=>x.Key == user.Id).Select(x=>x.Value).FirstOrDefault());
+                var add = tcpUsers.Where(x => x.Key == user.Id).Select(x => x.Value).FirstOrDefault();
+                if (add is null)
+                    continue;
+                tcpClients.Add(add);
             }
 
             return tcpClients;
@@ -95,6 +99,8 @@ namespace CoolServer.MessageTransfer
             {
                 connection.Add(message.Message.Sender.Id, client);
             }
+            Tuple<MessageDetails,HttpStatusCode, ProblemDetails> messageCU = null;
+            Tuple< HttpStatusCode, ProblemDetails> messageD = null;
             switch (message.Action)
             {
                 case ACTION.CHNG:
@@ -105,13 +111,13 @@ namespace CoolServer.MessageTransfer
                         Attachments = message.Message.Attachments,
                         IsViewed = message.Message.IsViewed
                     };
-                    _ = RequestApi<MessageDetails, MessageNewDetails>.Put(messageNew, $"Messages/{message.Message.Id}", message.Token);
+                    messageCU = await RequestApi<MessageDetails, MessageNewDetails>.Put(messageNew, $"Messages/{message.Message.Id}", message.Token);
                     break;
                 case ACTION.DEL:
                     //Заносим изменения в бд
                     if (message.ForAll is null)
                         message.ForAll = false;
-                    _ = RequestApi<object,object>.Delete($"Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
+                    messageD = await RequestApi<object,object>.Delete($"Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
                      
                     break;
                 case ACTION.SEND:
@@ -122,13 +128,13 @@ namespace CoolServer.MessageTransfer
                         Text = message.Message.Text
                     };
                     //Заносим изменения в бд
-                    _ = RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages/{message.Message.Id}", message.Token);
+                    messageCU = await RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages/{message.Message.Id}", message.Token);
                     break;
 
             }
             var chat = await RequestApi<CoolApiModels.Chats.ChatDetails, int>.Get($"Chats/{message.Message.ChatId}", message.Token);
             if(chat.Item1 != null)
-                SendMessage(message, connection.FindUser(chat.Item1.ChatMembers.ToList().Select(x=>x).Where(x=>x.Id!=message.Message.Sender.Id)));
+                SendMessage(message, connection.FindUser(chat.Item1.ChatMembers.Where(x=>x.Id!=message.Message.Sender.Id)));
         }
 
  
