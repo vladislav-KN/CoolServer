@@ -95,50 +95,54 @@ namespace CoolServer.MessageTransfer
             var stream = client.GetStream();
             var binf = new BinaryFormatter();
             var message =  binf.Deserialize(stream) as TransferMessages;
+            if(message is null)
             if (!connection.TcpUsers.ContainsKey(message.Message.Sender.Id))
             {
                 connection.Add(message.Message.Sender.Id, client);
             }
-            Tuple<MessageDetails,HttpStatusCode, ProblemDetails> messageCU = null;
-            Tuple< HttpStatusCode, ProblemDetails> messageD = null;
-            switch (message.Action)
-            {
-                case ACTION.CHNG:
-                    //Заносим изменения в бд
-                    MessageNewDetails messageNew = new MessageNewDetails()
-                    {
-                        Text = message.Message.Text,
-                        Attachments = message.Message.Attachments,
-                        IsViewed = message.Message.IsViewed
-                    };
-                    messageCU = await RequestApi<MessageDetails, MessageNewDetails>.Put(messageNew, $"Messages/{message.Message.Id}", message.Token);
-                    break;
-                case ACTION.DEL:
-                    //Заносим изменения в бд
-                    if (message.ForAll is null)
-                        message.ForAll = false;
-                    messageD = await RequestApi<object,object>.Delete($"Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
+            if(!string.IsNullOrEmpty(message.Token)) 
+            { 
+                Tuple<MessageDetails,HttpStatusCode, ProblemDetails> messageCU = null;
+                Tuple< HttpStatusCode, ProblemDetails> messageD = null;
+                switch (message.Action)
+                {
+                    case ACTION.CHNG:
+                        //Заносим изменения в бд
+                        MessageNewDetails messageNew = new MessageNewDetails()
+                        {
+                            Text = message.Message.Text,
+                            Attachments = message.Message.Attachments,
+                            IsViewed = message.Message.IsViewed
+                        };
+                        messageCU = await RequestApi<MessageDetails, MessageNewDetails>.Put(messageNew, $"Messages/{message.Message.Id}", message.Token);
+                        break;
+                    case ACTION.DEL:
+                        //Заносим изменения в бд
+                        if (message.ForAll is null)
+                            message.ForAll = false;
+                        messageD = await RequestApi<object,object>.Delete($"Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
                      
-                    break;
-                case ACTION.SEND:
-                    NewMessageDetails newMessage = new NewMessageDetails()
-                    {
-                        ChatId = message.Message.ChatId,
-                        Attachments = message.Message.Attachments,
-                        Text = message.Message.Text
-                    };
-                    //Заносим изменения в бд
-                    messageCU = await RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages", message.Token);
-                    break;
+                        break;
+                    case ACTION.SEND:
+                        NewMessageDetails newMessage = new NewMessageDetails()
+                        {
+                            ChatId = message.Message.ChatId,
+                            Attachments = message.Message.Attachments,
+                            Text = message.Message.Text
+                        };
+                        //Заносим изменения в бд
+                        messageCU = await RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages", message.Token);
+                        break;
 
-            }
-            var chat = await RequestApi<CoolApiModels.Chats.ChatDetails, int>.Get($"Chats/{message.Message.ChatId}", message.Token);
-            if(!(messageCU is null))
-                if(!(messageCU.Item1 is null))
-                    message.Message.Id = messageCU.Item1.Id;
+                }
+                var chat = await RequestApi<CoolApiModels.Chats.ChatDetails, int>.Get($"Chats/{message.Message.ChatId}", message.Token);
+                if(!(messageCU is null))
+                    if(!(messageCU.Item1 is null))
+                        message.Message.Id = messageCU.Item1.Id;
  
-            if (chat.Item1 != null)
-                SendMessage(message, connection.FindUser(chat.Item1.ChatMembers));
+                if (chat.Item1 != null)
+                    SendMessage(message, connection.FindUser(chat.Item1.ChatMembers));
+            }
         }
 
  
