@@ -88,22 +88,23 @@ namespace CoolServer.MessageTransfer
             connection = new TcpConnections();
 
         }
-         
+
 
         public async Task HandlerMessage(TcpClient client)
         {
             var stream = client.GetStream();
             var binf = new BinaryFormatter();
-            var message =  binf.Deserialize(stream) as TransferMessages;
-            if(!(message is null))
+            var message = binf.Deserialize(stream) as TransferMessages;
+            if (!(message is null))
+            {
                 if (!connection.TcpUsers.ContainsKey(message.Message.Sender.Id))
                 {
                     connection.Add(message.Message.Sender.Id, client);
                 }
-                if(!string.IsNullOrEmpty(message.Token)) 
-                { 
-                    Tuple<MessageDetails,HttpStatusCode, ProblemDetails> messageCU = null;
-                    Tuple< HttpStatusCode, ProblemDetails> messageD = null;
+                if (!string.IsNullOrEmpty(message.Token))
+                {
+                    Tuple<MessageDetails, HttpStatusCode, ProblemDetails> messageCU = null;
+                    Tuple<HttpStatusCode, ProblemDetails> messageD = null;
                     switch (message.Action)
                     {
                         case ACTION.CHNG:
@@ -120,8 +121,8 @@ namespace CoolServer.MessageTransfer
                             //Заносим изменения в бд
                             if (message.ForAll is null)
                                 message.ForAll = false;
-                            messageD = await RequestApi<object,object>.Delete($"Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
-                     
+                            messageD = await RequestApi<object, object>.Delete($"Messages/{message.Message.Id}?IsForAll={message.ForAll}", message.Token);
+
                             break;
                         case ACTION.SEND:
                             NewMessageDetails newMessage = new NewMessageDetails()
@@ -131,18 +132,19 @@ namespace CoolServer.MessageTransfer
                                 Text = message.Message.Text
                             };
                             //Заносим изменения в бд
-                            messageCU = await RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages", message.Token);
+                            messageCU = await RequestApi<MessageDetails, NewMessageDetails>.Post(newMessage, $"Messages", message.Token);
                             break;
 
                     }
                     var chat = await RequestApi<CoolApiModels.Chats.ChatDetails, int>.Get($"Chats/{message.Message.ChatId}", message.Token);
-                    if(!(messageCU is null))
-                        if(!(messageCU.Item1 is null))
+                    if (!(messageCU is null))
+                        if (!(messageCU.Item1 is null))
                             message.Message.Id = messageCU.Item1.Id;
- 
+
                     if (chat.Item1 != null)
                         SendMessage(message, connection.FindUser(chat.Item1.ChatMembers));
                 }
+            }
         }
 
  
