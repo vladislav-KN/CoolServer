@@ -165,7 +165,7 @@ namespace CoolServer.Controllers
                     StatusCode= 400
                 };
             }
-            var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users/{password}", token);
+            var result = await RequestApi<UserDetails, UserNewDetails>.Put(new UserNewDetails() { NewLogin = user.Login, CurrentPassword = user.Password, NewPassword = password},$"Users?id={user.Id}", token);
             if (result.Item2 == System.Net.HttpStatusCode.OK)
             {
                 User newuser = new User()
