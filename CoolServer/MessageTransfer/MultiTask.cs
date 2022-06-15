@@ -55,7 +55,6 @@ namespace CoolServer.MessageTransfer
                 var task = tcpListener.AcceptTcpClientAsync();
 
                 var tasks = new List<Task<TcpClient>>();
-                tasks.Add(task);
                 Task<TcpClient> tcpClientTask;
 
                 while ((tcpClientTask = await Task.WhenAny(tasks)) != null)
@@ -64,7 +63,6 @@ namespace CoolServer.MessageTransfer
 
                     var new_task = tcpListener.AcceptTcpClientAsync();
 
-                    tasks.Add(new_task);
                 }
             }
             catch (Exception e)

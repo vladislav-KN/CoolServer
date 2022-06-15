@@ -117,11 +117,11 @@ namespace CoolServer.Controllers
         /// <response code="200">Chat создан</response>
         /// <response code="400">Ошибки возникшие при попытке создать чата</response>
         /// <response code="500">Сервер не отвечает</response>
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(typeof(bool), 200)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         [ProducesResponseType(500)]
-        public async Task<ActionResult<bool>> DeleteAsync(Chat Chat)
+        public async Task<ActionResult<bool>> DeleteAsync(Guid chatId)
         {
             StringValues token;
             if (!Request.Headers.TryGetValue("Token", out token))
@@ -137,11 +137,8 @@ namespace CoolServer.Controllers
                     StatusCode= 400
                 };
             }
-            NewChatDetails newChat = new NewChatDetails()
-            {
-                ReceiverId = Chat.ChatMembers.First().Id
-            };
-            var result = await RequestApi<ChatDetails, NewChatDetails>.Delete($"Chats",token.ToString());
+           
+            var result = await RequestApi<bool, bool>.Delete($"Chats/{chatId}",token.ToString());
             if (result.Item1 == System.Net.HttpStatusCode.OK)
             {
                 return true;
