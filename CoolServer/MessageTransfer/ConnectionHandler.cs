@@ -92,14 +92,20 @@ namespace CoolServer.MessageTransfer
 
         public async Task HandlerMessage(TcpClient client)
         {
-            var stream = client.GetStream();
-            var binf = new BinaryFormatter();
-            var message = binf.Deserialize(stream) as TransferMessages;
-            if (!(message is null))
-            {
-                if (!connection.TcpUsers.ContainsKey(message.Message.Sender.Id))
+            while (true) { 
+                var stream = client.GetStream();
+                var binf = new BinaryFormatter();
+                while (!stream.DataAvailable)
                 {
-                    connection.Add(message.Message.Sender.Id, client);
+                    continue;
+                }
+                var message = binf.Deserialize(stream) as TransferMessages;
+                if (!(message is null))
+                {
+                    if (!connection.TcpUsers.ContainsKey(message.Message.Sender.Id))
+                    {
+                        connection.Add(message.Message.Sender.Id, client);
+                    }
                 }
                 if (!string.IsNullOrEmpty(message.Token))
                 {
@@ -145,6 +151,7 @@ namespace CoolServer.MessageTransfer
                         SendMessage(message, connection.FindUser(chat.Item1.ChatMembers));
                 }
             }
+
         }
 
  
