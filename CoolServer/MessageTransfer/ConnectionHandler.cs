@@ -128,7 +128,7 @@ namespace CoolServer.MessageTransfer
                         Text = message.Message.Text
                     };
                     //Заносим изменения в бд
-                    messageCU = await RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages/{message.Message.Id}", message.Token);
+                    messageCU = await RequestApi<MessageDetails,NewMessageDetails>.Post(newMessage, $"Messages", message.Token);
                     break;
 
             }
