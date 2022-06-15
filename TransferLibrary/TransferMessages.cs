@@ -1,10 +1,11 @@
-﻿using CoolServer.Controllers.CModels;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TransferLibrary.CModels;
 
-namespace CoolServer.MessageTransfer
+namespace TransferLibrary
 {
     [Serializable]
     public abstract class Transfer

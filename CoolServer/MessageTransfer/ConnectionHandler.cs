@@ -1,6 +1,5 @@
 ﻿using CoolApiModels.Messages;
 using CoolApiModels.Users;
-using CoolServer.Controllers.CModels;
 using CoolServer.Interfaces;
 using Newtonsoft.Json;
 using System;
@@ -10,6 +9,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
+using TransferLibrary;
 
 namespace CoolServer.MessageTransfer
 {

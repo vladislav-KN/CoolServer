@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoolApiModels.Users;
-using CoolServer.Controllers.CModels;
 using CoolServer.MessageTransfer;
 using Microsoft.Extensions.Primitives;
+using TransferLibrary.CModels;
 
 namespace CoolServer.Controllers
 {

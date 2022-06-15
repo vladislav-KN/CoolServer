@@ -1,11 +1,10 @@
-﻿using CoolApiModels.Chats;
-using CoolApiModels.Users;
+﻿ 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CoolServer.Controllers.CModels
+namespace TransferLibrary.CModels
 {
     /// <summary>
     /// Пользователь

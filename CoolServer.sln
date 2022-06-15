@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoolServer", "CoolServer\CoolServer.csproj", "{E0846679-9E47-40A5-B676-64158B4F5B7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTcp", "TestTcp\TestTcp.csproj", "{F3C2C03A-ECCA-4CC5-8A9E-D212D6E2C7DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestTcp", "TestTcp\TestTcp.csproj", "{F3C2C03A-ECCA-4CC5-8A9E-D212D6E2C7DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransferLibrary", "TransferLibrary\TransferLibrary.csproj", "{50959FAB-609A-4BC9-AAF4-A68FBCD62AE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F3C2C03A-ECCA-4CC5-8A9E-D212D6E2C7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3C2C03A-ECCA-4CC5-8A9E-D212D6E2C7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3C2C03A-ECCA-4CC5-8A9E-D212D6E2C7DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50959FAB-609A-4BC9-AAF4-A68FBCD62AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50959FAB-609A-4BC9-AAF4-A68FBCD62AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50959FAB-609A-4BC9-AAF4-A68FBCD62AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50959FAB-609A-4BC9-AAF4-A68FBCD62AE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

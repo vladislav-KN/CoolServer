@@ -63,8 +63,9 @@ namespace CoolServer.MessageTransfer
                     var handlerTask = connection.HandlerMessage(tcpClientTask.Result);
 
                     var new_task = tcpListener.AcceptTcpClientAsync();
-
+                 
                     tasks.Add(new_task);
+
                 }
             }
             catch (Exception e)

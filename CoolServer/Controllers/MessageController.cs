@@ -7,10 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using CoolApiModels.Messages;
 using CoolApiModels.Chats;
-using CoolServer.Controllers.CModels;
 using Microsoft.Extensions.Primitives;
 using CoolServer.MessageTransfer;
 using CoolApiModels.Users;
+using TransferLibrary.CModels;
 
 namespace CoolServer.Controllers
 {
